@@ -1,9 +1,8 @@
 use directories::ProjectDirs;
 use serde_json::{json, Value};
-use std::fs::File;
-use std::io::{BufWriter, stdin, Write};
+use std::fs;
+use std::io::stdin;
 use std::path::Path;
-
 
 
 pub fn setup_config() {
@@ -38,12 +37,8 @@ pub fn setup_config() {
         
         let data = format!("{}", data_pre.to_string());
 
-        let buffer = File::open(config_file)
-            .expect("unable to access cache!");
-        let mut buffer = BufWriter::new(buffer);
-        buffer.write_all(data.as_bytes())
-            .expect("Unable to write to buffer!");
-
+        fs::write(config_file, data)
+            .expect("failed to write to config file!!");
     }
 }
 

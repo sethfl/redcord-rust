@@ -15,5 +15,6 @@ mod reddit;
 fn main() {
     config::directories::check_all();
     config::setup::setup_init();
-    reddit::apirequest::random_image();
+    let url = reddit::apirequest::random_image().unwrap();
+    println!("{}", url.trim_matches('"'));
 }
