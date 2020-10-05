@@ -1,5 +1,6 @@
 mod config;
 mod reddit;
+mod test;
 //use serenity::async_trait;
 //use serenity::client::{Client, Context, EventHandler};
 //use serenity::model::channel::Message;
@@ -17,4 +18,5 @@ fn main() {
     config::setup::setup_init();
     let url = reddit::apirequest::random_image().unwrap();
     println!("{}", url.trim_matches('"'));
+    test::cfg_file_check();
 }
