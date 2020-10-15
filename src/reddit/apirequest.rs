@@ -1,6 +1,6 @@
 use dirs;
 use std::fs;
-use std::io::{Read, self, Write};
+use std::io::{self, Write};
 use serde_json::Value;
 use ureq;
 
@@ -20,21 +20,28 @@ pub fn random_image(subreddit: String) -> io::Result<String> {
 
 
 pub fn cache_request(request: String) {
-    let cache = dirs::cache_dir();
+    let detected_cache = format!("{:?}", dirs::cache_dir().unwrap());
 
-    let target = format!("{:?}/random.json", cache.unwrap());
+    let cache = format!("{}/redcord", detected_cache.trim_matches('"'));
+    
+    let target = format!("{}/random.json", cache);
 
     println!("caching API request...");
 
-    fs::write(target, request)
-            .expect("unable to cache API request!");
+    let mut file = fs::File::create(target)
+        .expect("unable to allocate cache!");
+
+    file.write_all(request.as_bytes())
+        .expect("unable to write to cache!");
 }
 
 
 pub fn parse_request() -> io::Result<String> { 
-    let cache = dirs::cache_dir();
+    let detected_cache = format!("{:?}", dirs::cache_dir().unwrap());
 
-    let target = format!("{:?}/random.json", cache.unwrap());
+    let cache = format!("{}/redcord", detected_cache.trim_matches('"'));
+    
+    let target = format!("{}/random.json", cache);
 
     println!("searching json file for media url...");
     

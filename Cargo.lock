@@ -219,15 +219,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "directories"
-version = "3.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f8fed639d60b58d0f53498ab13d26f621fd77569cc6edb031f4cc36a2ad9da0f"
-dependencies = [
- "dirs-sys",
-]
-
-[[package]]
 name = "dirs"
 version = "3.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -902,7 +893,6 @@ dependencies = [
 name = "redcord-rust"
 version = "0.1.0"
 dependencies = [
- "directories",
  "dirs",
  "serde_json",
  "serenity",

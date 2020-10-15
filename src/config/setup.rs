@@ -1,14 +1,16 @@
 use dirs;
 use serde_json::{json, Value};
 use std::fs;
-use std::io::{Error, self, stdin, Write};
+use std::io::{stdin, Write};
 use std::path::Path;
 
 
 pub fn setup_config() {
-    let config = dirs::config_dir();
+    let detected_config = format!("{:?}", dirs::config_dir().unwrap());
 
-    let config_file = format!("{:?}/config.json", config.unwrap()); 
+    let config = format!("{}/redcord", detected_config.trim_matches('"'));
+
+    let config_file = format!("{}/config.json", config); 
     
     let mut reddit_id = String::new();
     let mut reddit_secret = String::new();
@@ -37,18 +39,20 @@ pub fn setup_config() {
         
     let data = format!("{}", data_pre.to_string());
 
-    let mut config_save = fs::File::create(config_file)
+    let mut config = fs::File::create(config_file)
         .expect("unable to create config file!");
 
-    write!(config_save, "{}", data)
-        .expect("unable to write config file!");
+    config.write_all(data.as_bytes())
+        .expect("unable to write configuration!");
 }
 
 
 pub fn check_values() { 
-    let config = dirs::config_dir();
+    let detected_config = format!("{:?}", dirs::config_dir().unwrap());
 
-    let config_file = format!("{:?}/config.json", config.unwrap()); 
+    let config = format!("{}/redcord", detected_config.trim_matches('"'));
+
+    let config_file = format!("{}/config.json", config); 
     
     if Path::new(&config_file).exists() == true {
         println!("configuration files exist. skipping setup...");
