@@ -1,44 +1,56 @@
-use std::fs::File;
-use std::io;
+use dirs;
+use std::fs;
+use std::io::{self, Write};
 use serde_json::Value;
+use ureq;
 
 
 
-pub fn random_image() -> io::Result<String> {
-    let file = File::open("testing/reddit.json")
-        .expect("failed to fetch api request!");
-        
+pub fn random_image(subreddit: String) -> io::Result<String> {
+    let request_url = format!("https://reddit.com/r/{}/random.json", subreddit);
+   
+    let random_apirequest = ureq::get(&request_url).call().into_string().unwrap();
+
+    cache_request(random_apirequest);
+
+    let request = parse_request().unwrap();
+
+    Ok(request)
+}
+
+
+pub fn cache_request(request: String) {
+    let detected_cache = format!("{:?}", dirs::cache_dir().unwrap());
+
+    let cache = format!("{}/redcord", detected_cache.trim_matches('"'));
+    
+    let target = format!("{}/random.json", cache);
+
+    println!("caching API request...");
+
+    let mut file = fs::File::create(target)
+        .expect("unable to allocate cache!");
+
+    file.write_all(request.as_bytes())
+        .expect("unable to write to cache!");
+}
+
+
+pub fn parse_request() -> io::Result<String> { 
+    let detected_cache = format!("{:?}", dirs::cache_dir().unwrap());
+
+    let cache = format!("{}/redcord", detected_cache.trim_matches('"'));
+    
+    let target = format!("{}/random.json", cache);
+
     println!("searching json file for media url...");
     
+    let file = fs::File::open(target)
+        .expect("unable to read API request!");
+    
     let v: Value = serde_json::from_reader(file)?;
-    
-    let url = String::from(format!("{}", v[0]["data"]["children"][0]["data"]["url"]));
-    
-    if url.trim() == "Null" {
-        let mut count = 0u32;
             
-        loop {
-            count += 1;
-                
-            println!("error finding a post with an image. trying again...");
-                
-            let file = File::open("/mnt/c/Users/setha/Desktop/dev/test2/src/reddit.json")?;
-                
-            let v: Value = serde_json::from_reader(file)?;
-                
-            let url = String::from(format!("{}", v[0]["data"]["children"][0]["data"]["url"]));
-    
-            if url.trim() != "Null" {
-                break;
-            }
-                
-            if count == 20 {
-                panic!("couldn't find a post with an image. exiting...");
-            }
-        }
-    }
-    
-    println!("media post found!");
-    
+    let url = String::from(format!("{}", v[0]["data"]["children"][0]["data"]["url"]));
+              
     Ok(url)
 }
