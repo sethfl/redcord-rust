@@ -31,13 +31,17 @@ pub fn setup_config() {
         .read_line(&mut discord)
         .expect("failed to read discord_secret!");
     
-    let data_pre: Value = json!({
+    let data_pre = json!({
         "reddit_id": reddit_id,
         "reddit_secret": reddit_secret,
-        "discord": discord
+        "discord" : discord
     });
         
-    let data = format!("{}", data_pre.to_string());
+    let data1 = format!("{}", data_pre.to_string());
+
+    let data = data1.replace("/n", "");
+
+    println!("{}", data);
 
     let mut config = fs::File::create(config_file)
         .expect("unable to create config file!");

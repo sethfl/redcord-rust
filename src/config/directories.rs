@@ -68,7 +68,7 @@ pub fn data_check() {
 
 
 pub fn check_all() {
-    config_check();
+    // config_check();
     cache_check();
-    data_check();
+    // data_check();
 }
