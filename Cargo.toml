@@ -8,6 +8,6 @@ edition = "2018"
 
 [dependencies]
 dirs = "3.0.1"
+discord = { git = "https://github.com/SpaceManiac/discord-rs" }
 serde_json = "1.0.58"
-serenity = "0.8.7"
 ureq = { version = "1.5.1", features = ["json"] }
