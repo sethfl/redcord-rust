@@ -1,5 +1,5 @@
 [package]
-name = "redcord-rust"
+name = "redcord"
 version = "1.0.0"
 authors = ["Seth Flynn <sethaflynn@gmail.com>"]
 edition = "2018"
