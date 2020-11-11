@@ -1,0 +1,28 @@
+language: rust
+
+rust:
+        - stable
+        - beta
+        - nightly
+
+os: linux
+
+arch: amd64
+
+before_cache:
+        - rm -rf "$TRAVIS_HOME/.cargo/registry/src"
+
+cache: cargo 
+
+dist: bionic
+
+jobs:
+        allow_failures:
+                - rust: beta
+                - rust: nightly
+        fast_finish: true
+
+before_install:
+        - sudo apt-get -y update
+        - sudo apt-get -y upgrade
+        - sudo apt-get -y install build-essential gcc libssl-dev pkg-config libsodium-dev opus-tools libopus-dev ffmpeg
