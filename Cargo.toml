@@ -3,6 +3,13 @@ name = "redcord"
 version = "1.0.0"
 authors = ["Seth Flynn <sethaflynn@gmail.com>"]
 edition = "2018"
+description = "a Discord Bot that fetches data from Reddit"
+documentation = "https://github.com/sethfl/redcord-rust/blob/v1.0.0/README.md"
+readme = "README.md"
+repository = "https://github.com/sethfl/redcord-rust"
+license = "MIT"
+keywords = ["discord", "bot", "reddit", "api"]
+categories = ["api-bindings", "command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
