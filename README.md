@@ -1,13 +1,18 @@
-# redcord-rust
-A rewrite of my redcord app (found [here](https://github.com/sethfl/redcord)) in pure Rust. It is currently in development, and thus nonfunctional. It is simply here to provide a backup for the project, as well as to allow for contributions. Any help would be appreciated. 
+# redcord
+`redcord` is a Discord bot that can send media from Reddit right into your Discord server. It does this by recieving a command from users, making a request to the public Reddit API, parsing recieved `.json` files, and then replying to the user with the data.
+
+## Commands:
+
+#### `-random [subreddit]`
+This command, when sent into a sever with `redcord` present, triggers the bot to send a media URL from a random post on the subreddit entered with the command. The only other outputs are either a link to a comment (which is the case when the random post recieved does not contain a media URL), or `null` when the subreddit requested does not exist.
 
 ## Installation:
 
-To install `redcord-rust`, you can just download a pre-compiled binary for your platform on the [releases page](https://github.com/sethfl/redcord-rust/releases).
+To install `redcord`, you can just download a pre-compiled binary for your platform on the [releases page](https://github.com/sethfl/redcord/releases).
 
 ## How to Use
 
-The only setup required for this is to create a Discord Bot (instructions [here](https://discordpy.readthedocs.io/en/latest/discord.html) and setting the Bot's token as an environmental variable called `DISCORD_TOKEN`.
+The only setup required for this is to create a Discord Bot (instructions [here](https://discordpy.readthedocs.io/en/latest/discord.html)) and then setting the Bot's token as an environmental variable called `DISCORD_TOKEN` (this is done on linux with the command `export DISCORD_TOKEN=[BOT_TOKEN_HERE]`).
 
 From there, you just run the binary and it will launch the bot.
 
@@ -37,9 +42,9 @@ The exact name may be different for your operating system; find your equivalents
 ### Getting the Source Code
 You can clone the repository using the following command:
 
-`git clone https://github.com/sethfl/redcord-rust.git`
+`git clone https://github.com/sethfl/redcord.git`
 
-or, you can just download a tarball from the [releases](https://github.com/sethfl/redcord-rust/releases) page. 
+or, you can just download a tarball from the [releases](https://github.com/sethfl/redcord/releases) page. 
 
 ### Building the Source Code
 You can build a binary by running this:
