@@ -15,12 +15,16 @@ cache: cargo
 
 dist: bionic
 
+branches:
+   only:
+        - master
+
 jobs:
-        allow_failures:
-                - rust: beta
-                - rust: nightly
-                - os: windows
-        fast_finish: true
+   allow_failures:
+        - rust: beta
+        - rust: nightly
+        - os: windows
+   fast_finish: true
 
 before_install:
    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y update                                                                                   ; if
