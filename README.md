@@ -1,4 +1,7 @@
 # redcord
+
+[![Build Status](https://travis-ci.org/sethfl/redcord.svg?branch=main)](https://travis-ci.org/sethfl/redcord)
+
 `redcord` is a Discord bot that can send media from Reddit right into your Discord server. It does this by recieving a command from users, making a request to the public Reddit API, parsing recieved `.json` files, and then replying to the user with the data.
 
 ## Commands:
