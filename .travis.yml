@@ -29,7 +29,9 @@ jobs:
 before_install:
    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y update                                                                                        ; fi
    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y upgrade                                                                                       ; fi
-   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y install build-essential gcc libssl-dev pkg-config libsodium-dev opus-tools libopus-dev ffmpeg ; fi
+   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y install build-essential pkg-config libssl-dev opus-tools ffmpeg                               ; fi
+   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install opus-tools -y                                                                                 ; fi
+   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install ffmpeg -y                                                                                     ; fi
 
 script:
    - cargo build --release --locked

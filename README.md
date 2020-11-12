@@ -30,14 +30,10 @@ First, you need some system dependencies. The most important is Rust, which you 
 
 Then, you need to install some extra dependencies for the libraries used (preferably through a package manager like apt, dnf, or pacman). These include:
 
-- gcc
-- rust
-- cargo
-- libssl-dev
+- build-essential
 - pkg-config
-- libsodium-dev
+- libssl-dev
 - opus-tools
-- libopus-dev
 - ffmpeg
 
 The exact name may be different for your operating system; find your equivalents.
