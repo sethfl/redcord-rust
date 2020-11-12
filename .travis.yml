@@ -17,7 +17,7 @@ dist: bionic
 
 branches:
    only:
-        - master
+        - main
 
 jobs:
    allow_failures:
