@@ -13,19 +13,31 @@ arch: amd64
 
 cache: cargo 
 
-dist:
-        - bionic
-        - server-2016
+dist: bionic
 
 jobs:
         allow_failures:
                 - rust: beta
                 - rust: nightly
                 - os: windows
-                - dist: server-2016
         fast_finish: true
 
 before_install:
-        - sudo apt-get -y update
-        - sudo apt-get -y upgrade
-        - sudo apt-get -y install build-essential gcc libssl-dev pkg-config libsodium-dev opus-tools libopus-dev ffmpeg
+   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y update                                                                                   ; if
+   - if [ "$TRAVIS_OS_NAME" = "linux" ]; sudo apt-get -y upgrade                                                                                       ; if
+   - if [ "$TRAVIS_OS_NAME" = "linux" ]; sudo apt-get -y install build-essential gcc libssl-dev pkg-config libsodium-dev opus-tools libopus-dev ffmpeg ; if
+
+script:
+   - cargo build --release --locked
+
+deploy:
+   provider: releases
+   token:
+        secure: k83z9coWdUXhfXAyfb3Es3Yxv91vE8PWIzs9qDY1MvGuuupmoyc5JqCBeTVQ5i6vZeNgvVjAEQe0nw/jnGkCQpXcfDQEFxvLDRxK1zKaHOzvXiRFAavuUnr/S+hWCLmzLYDL1cwyVzeIgORwUDy4dlAtghdFCcOeRECwMRM1wQRMuLktwnfCOZ8UCaXhttWHKvBRFOs700gKOeUKQsWwEFDR37ah/HFvqw8QeqZpenZ9x/g0CY0W1ClopproAjIUGKOc3D8dFlUoIPFbxrsoWbssUoXqMRESp5BjKfvRl0EqIe+iJe08wSwhgdNKd+mJxINJDIwCMQckSBQr9NRZR0l501RrLOV6/KpXF/92qrIjvPDlSILH2ajKV7nGYb3N3Zm/9Qnw3mr8/vMujvofElAMqe1Qaa8EhMmRfnoGrrpbg5glRlOsTiJPz9S1zW2P36pgQmkaiCAFb/N2huDe78QQWAhobDz9lEyZTZFlMpYFGB+A6jy/TOITD+K24jSrM1cnNeAicSYMN0d83Ud25E1rHsGcwFBk2V43guHeVy7bT1g9bstPsOzo19juFGGBOU5FWh+osayYiGOeQ1SdmD/sn9pMPhyeMUUPdGSpQ3873ublVNNh/yteW1HVvkq/ZileL5iTbi4OVwfIOHrX3yITB3NkugpT3lGGn9llwIU=
+   file_glob: true
+   file: target/release/redcor*
+   on:
+        repo: sethfl/redcord
+        tags: true
+   cleanup: false
+   draft: true
