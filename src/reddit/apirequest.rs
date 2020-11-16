@@ -1,6 +1,4 @@
-use dirs;
-use std::fs;
-use std::io::{self, Write};
+use std::io;
 use serde_json::Value;
 use ureq;
 
@@ -9,46 +7,15 @@ use ureq;
 pub fn random_image(subreddit: String) -> io::Result<String> {
     let request_url = format!("https://reddit.com/r/{}/random.json", subreddit);
    
-    let random_apirequest = ureq::get(&request_url).call().into_string().unwrap();
+    let random = ureq::get(&request_url).call().into_string().unwrap();
 
-    cache_request(random_apirequest);
-
-    let request = parse_request().unwrap();
+    let request = parse_request(random).unwrap();
 
     Ok(request)
 }
 
-
-pub fn cache_request(request: String) {
-    let detected_cache = format!("{:?}", dirs::cache_dir().unwrap());
-
-    let cache = format!("{}/redcord", detected_cache.trim_matches('"'));
-    
-    let target = format!("{}/random.json", cache);
-
-    println!("caching API request...");
-
-    let mut file = fs::File::create(target)
-        .expect("unable to allocate cache!");
-
-    file.write_all(request.as_bytes())
-        .expect("unable to write to cache!");
-}
-
-
-pub fn parse_request() -> io::Result<String> { 
-    let detected_cache = format!("{:?}", dirs::cache_dir().unwrap());
-
-    let cache = format!("{}/redcord", detected_cache.trim_matches('"'));
-    
-    let target = format!("{}/random.json", cache);
-
-    println!("searching json file for media url...");
-    
-    let file = fs::File::open(target)
-        .expect("unable to read API request!");
-    
-    let v: Value = serde_json::from_reader(file)?;
+pub fn parse_request(api_data: String) -> io::Result<String> { 
+    let v: Value = serde_json::from_str(&api_data)?;
             
     let url = String::from(format!("{}", v[0]["data"]["children"][0]["data"]["url"]));
               

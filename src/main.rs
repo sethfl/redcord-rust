@@ -2,16 +2,12 @@ use discord::model::Event;
 use discord::Discord;
 use std::env;
 use std::io;
-mod config;
 mod reddit;
 
-
+const PREFIX: char = '-';
 
 fn main() -> io::Result<()> {
-    config::directories::check_all();
-    // config::setup::setup_init();
-    
-    let discord = Discord::from_bot_token(&env::var("DISCORD_TOKEN").expect("no discord token found as enviormental variable!"))
+    let discord = Discord::from_bot_token(&env::var("DISCORD_TOKEN").expect("no discord token found as an enviormental variable. please set it as DISCORD_TOKEN."))
         .expect("bot login failed!");
 
     let (mut connection, _) = discord.connect().expect("failed to connect to discord!");
@@ -20,19 +16,20 @@ fn main() -> io::Result<()> {
     loop {
         match connection.recv_event() {
             Ok(Event::MessageCreate(message)) => {
+                let random = format!("{}random", PREFIX);
+                let spam = format!("{}spam", PREFIX);
 
-                if message.content.contains("-random") {
-                    println!("recieved command from {}", message.author.name);
-                    
-                    let subreddit: String = message.content.replace("-random ", "");
+                if message.content.contains(&random) {
+                    let extra = format!("{} ", &random);
+                    let subreddit: String = message.content.replace(&extra, "");
 
-                    println!("making a random_image API request from {}", subreddit);
+                    println!("got a random_image api request for {}", subreddit);
 
                     let random_request = reddit::apirequest::random_image(subreddit).unwrap();
 
                     let url = format!("{}", random_request.trim_matches('"'));
 
-                    println!("got {} from a random_image API request for {}", url, message.author.name); 
+                    println!("got this for {}: {}", message.author.name, url); 
 
                     let _ = discord.send_message(
                         message.channel_id,
@@ -40,6 +37,31 @@ fn main() -> io::Result<()> {
                         "",
                         false,
                         );
+                } if message.content.contains(&spam) {
+                    let extra = format!("{} ", &spam);
+                    let subreddit: String = message.content.replace(&extra, "");
+                    
+                    println!("got a spam api request for {}", subreddit);
+
+                    let mut i = 0;
+
+                    while i < 10 {
+                        let subreddit2: String = message.content.replace(&extra, "");
+                            
+                        let random_request = reddit::apirequest::random_image(subreddit2).unwrap();
+
+                        let url = format!("{}", random_request.trim_matches('"'));
+
+                        println!("got this for {}: {}", message.author.name, url); 
+
+                        let _ = discord.send_message(
+                            message.channel_id,
+                            &url,
+                            "",
+                            false,
+                            );
+                        i = i + 1;
+                    }
                 }
             }
             Ok(_) => {}
