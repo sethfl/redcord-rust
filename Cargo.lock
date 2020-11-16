@@ -262,7 +262,7 @@ checksum = "212d0f5754cb6769937f4501cc0e67f4f4483c8d2c3e1e922ee9edbe4ab4c7c0"
 [[package]]
 name = "discord"
 version = "0.8.0"
-source = "git+https://github.com/SpaceManiac/discord-rs#e303da2ac8b7faddf8e3a156c1ce59352a47c51a"
+source = "git+https://github.com/SpaceManiac/discord-rs.git?rev=e303da2#e303da2ac8b7faddf8e3a156c1ce59352a47c51a"
 dependencies = [
  "base64-rs",
  "bitflags 1.2.1",
@@ -930,7 +930,7 @@ dependencies = [
 
 [[package]]
 name = "redcord"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "dirs",
  "discord",

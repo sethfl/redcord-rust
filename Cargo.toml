@@ -1,6 +1,6 @@
 [package]
 name = "redcord"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["Seth Flynn <sethaflynn@gmail.com>"]
 edition = "2018"
 description = "a Discord Bot that fetches data from Reddit"
@@ -15,6 +15,6 @@ categories = ["api-bindings", "command-line-utilities"]
 
 [dependencies]
 dirs = "3.0.1"
-discord = { git = "https://github.com/SpaceManiac/discord-rs" }
-serde_json = "1.0.58"
-ureq = { version = "1.5.1", features = ["json"] }
+discord = { git = "https://github.com/SpaceManiac/discord-rs.git", rev = "e303da2" }
+serde_json = "1.0.59"
+ureq = { version = "1.5.2", features = ["json"] }
