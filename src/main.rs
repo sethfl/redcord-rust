@@ -7,7 +7,7 @@ mod reddit;
 const PREFIX: char = '-';
 
 fn main() -> io::Result<()> {
-    let discord = Discord::from_bot_token(&env::var("DISCORD_TOKEN").expect("no discord token found as an enviormental variable. please set it as DISCORD_TOKEN."))
+    let discord = Discord::from_bot_token(&env::var("DISCORD_TOKEN").expect("no discord token found as an environmental variable. please set it as DISCORD_TOKEN."))
         .expect("bot login failed!");
 
     let (mut connection, _) = discord.connect().expect("failed to connect to discord!");
@@ -69,7 +69,7 @@ fn main() -> io::Result<()> {
                 println!("discord gateway closed with code {:?}: {}", code, body);
                 break;
             }
-        Err(err) => println!("failed to recieve data from discord! {:?}", err),
+        Err(err) => println!("failed to receive data from discord! {:?}", err),
         }
     }
     Ok(())
