@@ -1,7 +1,5 @@
 # redcord
 
-[![Build Status](https://travis-ci.org/getchoo/redcord.svg?branch=main)](https://travis-ci.org/getchoo/redcord)
-
 `redcord` is a Discord bot that can send media from Reddit right into your Discord server. It does this by recieving a command from users, making a request to the public Reddit API, parsing recieved `.json` files, and then replying to the user with the data.
 
 ## Commands:
@@ -24,6 +22,9 @@ From there, you just run the binary and it will launch the bot.
 The only problems I have really come across with this is setting the environmental variable correctly. Try to confirm that your Bot Token is set as a variable called `DISCORD_TOKEN`. If there are any issues you come across, please contact me at sethaflynn@gmail.com
 
 ## For Developers:
+
+### Getting in-development builds
+You can find the resulting build of any commit by looking through the [Workflow](https://github.com/getchoo/redcord/actions) section. Alternativley, if you wish to make modifications to the code and/or build it from source yourself, use the following steps:
 
 ### Dependencies
 First, you need some system dependencies. The most important is Rust, which you can install using the `rustup` tool (read more [here](https://www.rust-lang.org/learn/get-started)).
