@@ -2,9 +2,7 @@ use std::io;
 use serde_json::Value;
 use ureq;
 
-
-
-pub fn random_image(subreddit: String) -> io::Result<String> {
+pub async fn random_image(subreddit: String) -> io::Result<String> {
     let request_url = format!("https://reddit.com/r/{}/random.json", subreddit);
    
     let random = ureq::get(&request_url).call().into_string().unwrap();

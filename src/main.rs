@@ -1,5 +1,6 @@
 use discord::model::Event;
 use discord::Discord;
+use futures::executor::block_on;
 use std::env;
 use std::io;
 mod reddit;
@@ -25,7 +26,9 @@ fn main() -> io::Result<()> {
 
                     println!("got a random_image api request for {}", subreddit);
 
-                    let random_request = reddit::apirequest::random_image(subreddit).unwrap();
+                    let random_request_future = reddit::apirequest::random_image(subreddit);
+
+                    let random_request = block_on(random_request_future).unwrap();
 
                     let url = format!("{}", random_request.trim_matches('"'));
 
@@ -47,8 +50,10 @@ fn main() -> io::Result<()> {
 
                     while i < 10 {
                         let subreddit2: String = message.content.replace(&extra, "");
-                            
-                        let random_request = reddit::apirequest::random_image(subreddit2).unwrap();
+
+                        let random_request_future = reddit::apirequest::random_image(subreddit2);
+
+                        let random_request = block_on(random_request_future).unwrap();
 
                         let url = format!("{}", random_request.trim_matches('"'));
 
