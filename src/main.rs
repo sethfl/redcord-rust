@@ -28,7 +28,7 @@ fn main() -> io::Result<()> {
 
                     let random_request_future = reddit::apirequest::random_image(subreddit);
 
-                    let random_request = block_on(random_request_future).unwrap();
+                    let random_request = block_on(random_request_future);
 
                     let url = format!("{}", random_request.trim_matches('"'));
 
@@ -46,27 +46,50 @@ fn main() -> io::Result<()> {
                     
                     println!("got a spam api request for {}", subreddit);
 
-                    let mut i = 0;
+                    let ready = String::from("get ready...");
+                    
+                    let _ = discord.send_message(
+                        message.channel_id,
+                        &ready,
+                        "",
+                        false,
+                    );
 
-                    while i < 10 {
-                        let subreddit2: String = message.content.replace(&extra, "");
+                    println!("loading...");
 
-                        let random_request_future = reddit::apirequest::random_image(subreddit2);
+                    let spam = block_on(reddit::apirequest::spam(subreddit));
 
-                        let random_request = block_on(random_request_future).unwrap();
+                    println!("done! sending urls...");
 
-                        let url = format!("{}", random_request.trim_matches('"'));
+                    let url0 = format!("{:?}", spam.0.trim_matches('"'));
+                    let url1 = format!("{:?}", spam.1.trim_matches('"'));
+                    let url2 = format!("{:?}", spam.2.trim_matches('"'));
+                    let url3 = format!("{:?}", spam.3.trim_matches('"'));
 
-                        println!("got this for {}: {}", message.author.name, url); 
-
-                        let _ = discord.send_message(
-                            message.channel_id,
-                            &url,
-                            "",
-                            false,
-                            );
-                        i = i + 1;
-                    }
+                    let _ = discord.send_message(
+                        message.channel_id,
+                        &url0.trim_matches('"'),
+                        "",
+                        false,
+                    );
+                    let _ = discord.send_message(
+                        message.channel_id,
+                        &url1.trim_matches('"'),
+                        "",
+                        false,
+                    );
+                    let _ = discord.send_message(
+                        message.channel_id,
+                        &url2.trim_matches('"'),
+                        "",
+                        false,
+                    );
+                    let _ = discord.send_message(
+                        message.channel_id,
+                        &url3.trim_matches('"'),
+                        "",
+                        false,
+                    );
                 }
             }
             Ok(_) => {}
