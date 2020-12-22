@@ -7,6 +7,9 @@
 #### `-random [subreddit]`
 This command, when sent into a sever with `redcord` present, triggers the bot to send a media URL from a random post on the subreddit entered with the command. The only other outputs are either a link to a comment (which is the case when the random post recieved does not contain a media URL), or `null` when the subreddit requested does not exist.
 
+### `-spam [subreddit]`
+This command triggers the bot to send 4 media URLs from random posts on the subreddit entered with the command.
+
 ## Installation:
 
 To install `redcord`, you can just download a pre-compiled binary for your platform on the [releases page](https://github.com/getchoo/redcord/releases).
