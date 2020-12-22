@@ -1063,7 +1063,7 @@ dependencies = [
 
 [[package]]
 name = "redcord"
-version = "1.0.3"
+version = "2.0.0"
 dependencies = [
  "dirs",
  "discord",
