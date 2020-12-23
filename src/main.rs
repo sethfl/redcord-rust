@@ -8,8 +8,10 @@ mod reddit;
 const PREFIX: char = '-';
 
 fn main() -> io::Result<()> {
-    let discord = Discord::from_bot_token(&env::var("DISCORD_TOKEN").expect("no discord token found as an environmental variable. please set it as DISCORD_TOKEN."))
-        .expect("bot login failed!");
+    let discord = Discord::from_bot_token(&env::var("DISCORD_TOKEN").expect(
+        "no discord token found as an environmental variable. please set it as DISCORD_TOKEN.",
+    ))
+    .expect("bot login failed!");
 
     let (mut connection, _) = discord.connect().expect("failed to connect to discord!");
     println!("connected to discord!");
@@ -32,28 +34,19 @@ fn main() -> io::Result<()> {
 
                     let url = format!("{}", random_request.trim_matches('"'));
 
-                    println!("got this for {}: {}", message.author.name, url); 
+                    println!("got this for {}: {}", message.author.name, url);
 
-                    let _ = discord.send_message(
-                        message.channel_id,
-                        &url,
-                        "",
-                        false,
-                        );
-                } if message.content.contains(&spam) {
+                    let _ = discord.send_message(message.channel_id, &url, "", false);
+                }
+                if message.content.contains(&spam) {
                     let extra = format!("{} ", &spam);
                     let subreddit: String = message.content.replace(&extra, "");
-                    
+
                     println!("got a spam api request for {}", subreddit);
 
                     let ready = String::from("get ready...");
-                    
-                    let _ = discord.send_message(
-                        message.channel_id,
-                        &ready,
-                        "",
-                        false,
-                    );
+
+                    let _ = discord.send_message(message.channel_id, &ready, "", false);
 
                     println!("loading...");
 
@@ -97,7 +90,7 @@ fn main() -> io::Result<()> {
                 println!("discord gateway closed with code {:?}: {}", code, body);
                 break;
             }
-        Err(err) => println!("failed to receive data from discord! {:?}", err),
+            Err(err) => println!("failed to receive data from discord! {:?}", err),
         }
     }
     Ok(())
