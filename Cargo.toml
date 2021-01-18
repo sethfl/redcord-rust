@@ -17,4 +17,4 @@ dirs = "3.0.1"
 discord = { git = "https://github.com/SpaceManiac/discord-rs.git", tag = "v0.9.0" }
 futures = "0.3.12"
 serde_json = "1.0.61"
-ureq = { version = "1.5.4", features = ["json"] }
+ureq = { version = "2.0.1", features = ["json"] }
